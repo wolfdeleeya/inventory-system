@@ -4,6 +4,8 @@ using UnityEngine;
 
 public interface InventoryListener
 {
-    void AddItem(Item itemToAdd);
-    void RemoveItem(Item itemToRemove);
+    void AddItem(PickupableItem itemToAdd, int index);
+    void RemoveItem(int index);
+    void AddEmptySlot();
+    void RemoveEmptySlot(int index);
 }

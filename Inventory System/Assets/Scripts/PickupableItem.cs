@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PickupableItem : Item
 {
+    public int CellIndex;
+
     public override void Pickup()
     {
-        Inventory.instance.AddItem(this);
+        Inventory.Instance.AddItem(this);
     }
 }
