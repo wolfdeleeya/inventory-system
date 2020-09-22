@@ -49,6 +49,22 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Attributes"",
+                    ""type"": ""Button"",
+                    ""id"": ""dcb6ee6c-d2d5-4bd7-a2ba-7f35870a1519"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Drop"",
+                    ""type"": ""Button"",
+                    ""id"": ""357742ba-d0f7-449f-b7bf-8a66fb259e47"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -194,6 +210,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Equip"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7c6f3840-5b70-48d9-8d94-ed1315a7e763"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attributes"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""02b01322-c1e3-4121-a9fc-871b27e74912"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -206,6 +244,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_Click = m_Gameplay.FindAction("Click", throwIfNotFound: true);
         m_Gameplay_Inventory = m_Gameplay.FindAction("Inventory", throwIfNotFound: true);
         m_Gameplay_Equip = m_Gameplay.FindAction("Equip", throwIfNotFound: true);
+        m_Gameplay_Attributes = m_Gameplay.FindAction("Attributes", throwIfNotFound: true);
+        m_Gameplay_Drop = m_Gameplay.FindAction("Drop", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -259,6 +299,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Click;
     private readonly InputAction m_Gameplay_Inventory;
     private readonly InputAction m_Gameplay_Equip;
+    private readonly InputAction m_Gameplay_Attributes;
+    private readonly InputAction m_Gameplay_Drop;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -267,6 +309,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Click => m_Wrapper.m_Gameplay_Click;
         public InputAction @Inventory => m_Wrapper.m_Gameplay_Inventory;
         public InputAction @Equip => m_Wrapper.m_Gameplay_Equip;
+        public InputAction @Attributes => m_Wrapper.m_Gameplay_Attributes;
+        public InputAction @Drop => m_Wrapper.m_Gameplay_Drop;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -288,6 +332,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Equip.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEquip;
                 @Equip.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEquip;
                 @Equip.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnEquip;
+                @Attributes.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttributes;
+                @Attributes.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttributes;
+                @Attributes.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttributes;
+                @Drop.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDrop;
+                @Drop.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDrop;
+                @Drop.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDrop;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -304,6 +354,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Equip.started += instance.OnEquip;
                 @Equip.performed += instance.OnEquip;
                 @Equip.canceled += instance.OnEquip;
+                @Attributes.started += instance.OnAttributes;
+                @Attributes.performed += instance.OnAttributes;
+                @Attributes.canceled += instance.OnAttributes;
+                @Drop.started += instance.OnDrop;
+                @Drop.performed += instance.OnDrop;
+                @Drop.canceled += instance.OnDrop;
             }
         }
     }
@@ -314,5 +370,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnClick(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
         void OnEquip(InputAction.CallbackContext context);
+        void OnAttributes(InputAction.CallbackContext context);
+        void OnDrop(InputAction.CallbackContext context);
     }
 }

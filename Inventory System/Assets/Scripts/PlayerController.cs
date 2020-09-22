@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEditor;
+using UnityEngine.EventSystems;
+using System;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, UIListener
 {
     public float MovementSpeed;
     
@@ -14,15 +12,26 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _body;
     private PlayerControls _controls = null;
     private Vector2 _movement = Vector2.zero;
-    delegate void DetectionMethod();
-    private DetectionMethod _detectionMethod;
-
+    private Action _detectionMethod;
+    private System.Action _clickMethod;
+    private Vector3 RandomVec
+    {
+        get {
+            Vector3 ranVec = new Vector3(UnityEngine.Random.value, UnityEngine.Random.value);
+            return ranVec.normalized;
+        }
+    }
     private void Awake()
     {
         _camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         _controls = new PlayerControls();
-        _controls.Gameplay.Click.performed += ctx => Click();
         _body = GetComponent<Rigidbody2D>();
+        _clickMethod = Click;
+    }
+
+    private void Start()
+    {
+        UIManager.Instance.AddListener(this);
     }
 
     private void FixedUpdate()
@@ -48,7 +57,12 @@ public class PlayerController : MonoBehaviour
         {
             PickUpItem(obj);
         }
+    }
 
+    private void UIClick()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject() && !ItemHolder.Instance.IsEmpty)
+            DropItemOut();
     }
 
     private void OnInventory()
@@ -56,9 +70,35 @@ public class PlayerController : MonoBehaviour
         UIManager.Instance.ChangeInventoryState();
     }
 
+    public void OnClick()
+    {
+        _clickMethod?.Invoke();
+    }
+
+    void Print(string pr) => Debug.Log(pr);
+
     private void OnEquip()
     {
         UIManager.Instance.ChangeEquipState();
+    }
+
+    private void OnAttributes()
+    {
+        UIManager.Instance.ChangeAttributesState();
+    }
+
+    public void OnDrop()
+    {
+        if (!ItemHolder.Instance.IsEmpty)
+            DropItemOut();
+    }
+
+    public void DropItemOut()
+    {
+        ItemInfo item = ItemHolder.Instance.InAirItem;
+        item.SpawnWorldItem(transform.position + RandomVec * _pickupProximity * 1.5f);
+        ItemHolder.Instance.DropItem();
+        Destroy(item.gameObject);
     }
 
     private void PickUpItem(GameObject obj)
@@ -85,17 +125,29 @@ public class PlayerController : MonoBehaviour
     public void Style1()
     {
         _detectionMethod = null;
-        _controls.Gameplay.Click.Enable();
+        _clickMethod = Click;
     }
 
     public void Style2()
     {
         _detectionMethod = OverlapCircle;
-        _controls.Gameplay.Click.Disable();
+        _clickMethod = null;
     }
 
     private void OnEnable() => _controls.Enable();
 
     private void OnDisable() => _controls.Disable();
 
+    public void UIStateChanged()
+    {
+        if (UIManager.Instance.IsMenuOpened)
+            _clickMethod = UIClick;
+        else
+        {
+            if (_detectionMethod == null)
+                _clickMethod = Click;
+            else
+                _clickMethod = null;
+        }
+    }
 }
