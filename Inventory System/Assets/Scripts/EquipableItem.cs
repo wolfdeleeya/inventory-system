@@ -4,8 +4,20 @@ using UnityEngine;
 
 public class EquipableItem : PickupableItem
 {
-    public enum SlotType { Head, Armor, Legs, Weapon };
+    public EquipmentStats EquipmentStats
+    {
+        get { return (EquipmentStats)Stats; }
+    }
 
-    public SlotType Type { get; private set; }
-
+    public override void Pickup()
+    {
+        if (Equipment.Instance.IsSlotOccupied(EquipmentStats.Type))
+            base.Pickup();
+        else
+        {
+            ItemInfo info = Instantiate(_uiPrefab).GetComponent<ItemInfo>();
+            info.Initialize(Stats);
+            Equipment.Instance.EquipItem(info);
+        }
+    }
 }

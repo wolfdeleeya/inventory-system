@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickupableItem : Item
+public class NonequipableItem : PickupableItem
 {
-    [SerializeField] protected GameObject _uiPrefab;
+    public int Amount;
 
     public override void Pickup()
     {
         ItemInfo info = Instantiate(_uiPrefab).GetComponent<ItemInfo>();
-        info.Initialize(Stats);
+        info.Initialize(Stats, Amount);
         Inventory.Instance.AddItem(info);
     }
 }

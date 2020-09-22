@@ -1,12 +1,10 @@
-﻿using System;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public abstract class Item
+public abstract class Item : MonoBehaviour
 {
-    protected String _itemName;
-
-    public Sprite Sprite;
+    public ItemStats Stats;
 
     public abstract void Pickup();
 }

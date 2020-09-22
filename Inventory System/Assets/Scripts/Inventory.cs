@@ -7,7 +7,7 @@ public class Inventory
 {
     private int _startSize;
     private int _numOfColumns;
-    private List<PickupableItem> _items;
+    private List<ItemInfo> _items;
     private List<InventoryListener> _listeners;
 
     public static Inventory Instance { get; private set; }
@@ -21,35 +21,39 @@ public class Inventory
     {
         _startSize = startSize;
         _numOfColumns = numOfColumns;
-        _items = new List<PickupableItem>(_startSize);
+        _items = new List<ItemInfo>();
+        for (int i = 0; i < startSize; ++i)
+            _items.Add(null);
         _listeners = new List<InventoryListener>();
     }
 
-    public void AddItem(PickupableItem itemToAdd)
+    public void AddItem(ItemInfo itemToAdd)
     {
-        for(int i = 0;i<_items.Capacity;++i)
+        for(int i = 0;i<_items.Count;++i)
             if (_items[i] == null)
             {
-                _items[i] = itemToAdd;
-                _items[i].CellIndex = i;
+                _items[i] = itemToAdd.GetComponent<ItemInfo>();
                 InformListenersItemAdded(itemToAdd, i);
                 return;
             }
 
         _items.Add(itemToAdd);
-        InformListenersItemAdded(itemToAdd,_items.Capacity-1);
+        InformListenersItemAdded(itemToAdd, _items.Count-1);
         for (int i = 0; i < _numOfColumns - 1; ++i)
         {
             _items.Add(null);
             InformListenersEmptySlotAdded();
         }
-
-        //ONDA U VIEWU TO TREBA DOBRO UPDATEAT NAKON CEGA TREBA NAPRAVITI WORLD PREFABE ITEMA NAKON ČEGA TREBA SVE MERGEAT SA DEVOM DI ĆE VEĆ BITI MOVEMENT
-        // I RADITI NA DODAVANJU STVARI U INVENNTORY
-        //ONDA IDE INVENTORY MANAGMENT TE ANIMACIJE I UPDATEANJE IZGLEDA I ONDA SMINKANJE ET. 8 SATI
     }
 
-    public void RemoveItem(PickupableItem itemToRemove)
+    public void AddItemAtIndex(ItemInfo itemToAdd, int index)
+    {
+        _items[index] = itemToAdd;
+        InformListenersItemAdded(itemToAdd, index);
+    }
+
+    //BACANJE NA POD TREBA DODAT O TOM KASNIJE
+    public void RemoveItem(ItemInfo itemToRemove)
     {
         int index = _items.IndexOf(itemToRemove);
         int row = (int)index / _numOfColumns;
@@ -59,7 +63,7 @@ public class Inventory
             if (_items[i] != null)
                 occupiedSlots++;
 
-        if(occupiedSlots > 1)
+        if(occupiedSlots > 1 || _items.Count==_startSize)
         {
             _items[index] = null;
             InformListenersItemRemoved(index);
@@ -67,18 +71,19 @@ public class Inventory
         else
         {
             _items[index] = null;
-            for (int i = row * _numOfColumns; i < row * _numOfColumns + _numOfColumns; ++i)
+            for (int ind = _numOfColumns*row , i = 0; i < _numOfColumns; ++i)
             {
-                _items.RemoveAt(i);
-                InformListenersEmptySlotRemoved(i);
+                _items.RemoveAt(ind);
+                InformListenersEmptySlotRemoved(ind);
             }
         }
     }
+
     public void AddListener(InventoryListener listener) => _listeners.Add(listener);
 
     public void RemoveListener(InventoryListener listener) => _listeners.Remove(listener);
 
-    private void InformListenersItemAdded(PickupableItem item, int index)
+    private void InformListenersItemAdded(ItemInfo item, int index)
     {
         foreach (InventoryListener listener in _listeners)
             listener.AddItem(item, index);

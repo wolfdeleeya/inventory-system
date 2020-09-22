@@ -22,13 +22,8 @@ public class PlayerController : MonoBehaviour
         _camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         _controls = new PlayerControls();
         _controls.Gameplay.Click.performed += ctx => Click();
-    }
-
-    private void Start()
-    {
         _body = GetComponent<Rigidbody2D>();
     }
-
 
     private void FixedUpdate()
     {
@@ -56,9 +51,19 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void OnInventory()
+    {
+        UIManager.Instance.ChangeInventoryState();
+    }
+
+    private void OnEquip()
+    {
+        UIManager.Instance.ChangeEquipState();
+    }
+
     private void PickUpItem(GameObject obj)
     {
-        //TODO: NAPRAVI PICKUP LOGIKU
+        obj.GetComponent<Item>().Pickup();
         Destroy(obj);
     }
 
@@ -87,12 +92,6 @@ public class PlayerController : MonoBehaviour
     {
         _detectionMethod = OverlapCircle;
         _controls.Gameplay.Click.Disable();
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, _pickupProximity);
     }
 
     private void OnEnable() => _controls.Enable();
