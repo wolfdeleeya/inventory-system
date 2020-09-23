@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class ConsumableItemInfo : ItemInfo
 {
-    public void Consume()
+    public bool Done { get; protected set; }
+
+    public virtual void Consume()
     {
-        Debug.Log("Just consumed: " + Stats.Name);
+        if(((NonequipableStats)Stats).Consumable)
+            Debug.Log("Just consumed: " + Stats.Name);
+        Done = true;
     }
 }

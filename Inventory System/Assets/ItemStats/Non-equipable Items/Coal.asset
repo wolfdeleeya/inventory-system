@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e84f0c73d3705344a8719b9be0ed13e4, type: 3}
+  m_Script: {fileID: 11500000, guid: e7ebd019795df0c48958f8b0520e1842, type: 3}
   m_Name: Coal
   m_EditorClassIdentifier: 
   Name: Coal
   sprite: {fileID: 4769318998693152943, guid: 5360b6ad2020a4e4cb396ec5639aa4fd, type: 3}
-  MaxStack: 5
+  Consumable: 0
+  MaxStack: 3

@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
-public class StackableItemInfo : ItemInfo
+public class StackableItemInfo : ConsumableItemInfo
 {
     [SerializeField] private TextMeshProUGUI text;
     private int _amount;
@@ -22,7 +22,6 @@ public class StackableItemInfo : ItemInfo
     public void Initialize(ItemStats stats, int amount)
     {
         Stats = stats;
-        _type = Type.GetType("StackableItem");
         Amount = amount;
         text.text = Amount.ToString();
     }
@@ -30,15 +29,26 @@ public class StackableItemInfo : ItemInfo
     public override void SpawnWorldItem(Vector3 position)
     {
         GameObject obj = Instantiate(_worldPrefab, position, Quaternion.identity);
-        obj.AddComponent(_type);
         obj.GetComponent<StackableItem>().Initialize(this, Amount);
     }
 
     public bool IsFull()
     {
-        int maxStack = ((NonequipableStats)Stats).MaxStack;
+        int maxStack = ((StackableItemStats)Stats).MaxStack;
         if (maxStack == -1 || maxStack > _amount)
             return false;
         return true;
+    }
+
+    public override void Consume()
+    {
+        if (((NonequipableStats)Stats).Consumable)
+            Debug.Log("Just consumed: " + Stats.Name);
+        if (((NonequipableStats)Stats).Consumable)
+        {
+            --Amount;
+        }
+        if (Amount == 0)
+            Done = true;
     }
 }

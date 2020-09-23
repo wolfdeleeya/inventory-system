@@ -99,6 +99,12 @@ public class PlayerController : MonoBehaviour, UIListener
             DropItemOut();
     }
 
+    public void OnSpawn()
+    {
+        Vector2 pos = _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        ItemSpawner.Instance.SpawnRandomItem(new Vector3(pos.x,pos.y,-1));
+    }
+
     public void DropItemOut()
     {
         ItemInfo item = ItemHolder.Instance.InAirItem;

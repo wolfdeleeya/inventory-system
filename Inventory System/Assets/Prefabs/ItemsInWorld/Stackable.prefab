@@ -267,6 +267,7 @@ GameObject:
   - component: {fileID: 8454138407672454216}
   - component: {fileID: 3906336119848540859}
   - component: {fileID: 2710743854489114293}
+  - component: {fileID: -116812874360214671}
   m_Layer: 8
   m_Name: Stackable
   m_TagString: Item
@@ -398,3 +399,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-116812874360214671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8454138407672454230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01ffcef737a32154e880649125070f23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Stats: {fileID: 0}
+  Amount: 1

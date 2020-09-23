@@ -5,12 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Non-equipable Item", menuName = "Items/Non-equipable Item")]
 public class NonequipableStats : ItemStats
 {
-    public int MaxStack;
+    public bool Consumable;
 
     public override string Description()
     {
-        string maxStack = "Maximum stack: ";
-        maxStack += MaxStack == -1 ? "unlimited\n" : MaxStack+"\n" ;
+        string maxStack = "Consumable: ";
+        maxStack += Consumable ? "Yes\n" : "No\n" ;
         return base.Description() + maxStack;
     }
 }

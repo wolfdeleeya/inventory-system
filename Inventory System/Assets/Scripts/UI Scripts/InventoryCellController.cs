@@ -54,7 +54,8 @@ public class InventoryCellController : CellController
         if (_itemContainer.Item is ConsumableItemInfo consumable)
         {
             consumable.Consume();
-            Inventory.Instance.RemoveItem(Index);
+            if (consumable.Done)
+                Inventory.Instance.RemoveItem(Index);
         }
     }
 

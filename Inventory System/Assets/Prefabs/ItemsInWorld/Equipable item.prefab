@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 7951179950226718445}
   - component: {fileID: 7377224633757929562}
   - component: {fileID: -3217017046548883492}
-  - component: {fileID: 4738075735087557676}
+  - component: {fileID: -2720794121239117955}
   m_Layer: 8
-  m_Name: Nonstackable items
+  m_Name: Equipable item
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186f1d605506db247ba41916b7c5ce04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIPrefab: {fileID: 6331730909699678854, guid: b4d050f37bc988e4a8fb32e8578e2f8c,
+  UIPrefab: {fileID: 6331730909699678854, guid: 27061467e8f45624bb652aa080512fd2,
     type: 3}
 --- !u!95 &-3217017046548883492
 Animator:
@@ -144,7 +144,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4738075735087557676
+--- !u!114 &-2720794121239117955
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7951179950226718451}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e48f4399b91f31c429d9a3f289067d5d, type: 3}
+  m_Script: {fileID: 11500000, guid: b5de4e9cd6052f247a0ecc8e07ea7669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Stats: {fileID: 0}

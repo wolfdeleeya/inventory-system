@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e84f0c73d3705344a8719b9be0ed13e4, type: 3}
-  m_Name: Silver Coin
+  m_Script: {fileID: 11500000, guid: e7ebd019795df0c48958f8b0520e1842, type: 3}
+  m_Name: Coin
   m_EditorClassIdentifier: 
-  Name: Silver Coin
+  Name: Coin
   sprite: {fileID: -7213763158683078022, guid: 2dc6fa3d120689b42a0c55ec44fa05ab, type: 3}
+  Consumable: 0
   MaxStack: -1
