@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87545953e777e3d47b90cd4aa662576a, type: 3}
+  m_Name: Plate Chest
+  m_EditorClassIdentifier: 
+  Name: Plate Chest
+  sprite: {fileID: -8485304772495292526, guid: 9fc916a220f70ee48b9a1cc37fcbf191, type: 3}
+  Stats:
+  - StatName: 0
+    Amount: 2
+  - StatName: 3
+    Amount: 50
+  Type: 1

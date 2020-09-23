@@ -1,7 +1,8 @@
-﻿using System;
+﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 
 public class Inventory
 {
@@ -29,6 +30,7 @@ public class Inventory
 
     public void AddItem(ItemInfo itemToAdd)
     {
+
         for(int i = 0;i<_items.Count;++i)
             if (_items[i] == null)
             {
@@ -44,6 +46,26 @@ public class Inventory
             _items.Add(null);
             InformListenersEmptySlotAdded();
         }
+    }
+
+    public void AddItem(StackableItemInfo itemToAdd)
+    {
+        for(int i=0;i<_items.Count;++i)
+            if(_items[i] != null && _items[i].Stats.Name == itemToAdd.Stats.Name)
+            {
+                StackableItemInfo item = _items[i] as StackableItemInfo;
+                while (!item.IsFull() && itemToAdd.Amount>0)
+                {
+                    itemToAdd.Amount--;
+                    item.Amount++;
+                }
+                if (itemToAdd.Amount == 0)
+                {
+                    GameObject.Destroy(itemToAdd.gameObject);
+                    return;
+                }
+            }
+        AddItem((ItemInfo)itemToAdd);
     }
 
     public void AddItemAtIndex(ItemInfo itemToAdd, int index)

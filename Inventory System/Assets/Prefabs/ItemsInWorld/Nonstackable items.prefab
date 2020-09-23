@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7951179950226718444}
   - component: {fileID: 7951179950226718445}
   - component: {fileID: 7377224633757929562}
+  - component: {fileID: -3217017046548883492}
   m_Layer: 8
   m_Name: Nonstackable items
   m_TagString: Item
@@ -51,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1887f1d2cc72d6444b317083117ad45b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -123,3 +124,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIPrefab: {fileID: 6331730909699678854, guid: b4d050f37bc988e4a8fb32e8578e2f8c,
     type: 3}
+--- !u!95 &-3217017046548883492
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7951179950226718451}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7f932a311fec7bc4e9c84111b981f35b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

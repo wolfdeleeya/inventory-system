@@ -65,6 +65,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Spawn"",
+                    ""type"": ""Button"",
+                    ""id"": ""7df30d6b-f152-4c2a-95f9-d18ef742e867"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -232,6 +240,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Drop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc758c77-d52d-4198-899e-cec7bfe16146"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spawn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -246,6 +265,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_Equip = m_Gameplay.FindAction("Equip", throwIfNotFound: true);
         m_Gameplay_Attributes = m_Gameplay.FindAction("Attributes", throwIfNotFound: true);
         m_Gameplay_Drop = m_Gameplay.FindAction("Drop", throwIfNotFound: true);
+        m_Gameplay_Spawn = m_Gameplay.FindAction("Spawn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -301,6 +321,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Equip;
     private readonly InputAction m_Gameplay_Attributes;
     private readonly InputAction m_Gameplay_Drop;
+    private readonly InputAction m_Gameplay_Spawn;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -311,6 +332,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Equip => m_Wrapper.m_Gameplay_Equip;
         public InputAction @Attributes => m_Wrapper.m_Gameplay_Attributes;
         public InputAction @Drop => m_Wrapper.m_Gameplay_Drop;
+        public InputAction @Spawn => m_Wrapper.m_Gameplay_Spawn;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -338,6 +360,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Drop.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDrop;
                 @Drop.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDrop;
                 @Drop.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDrop;
+                @Spawn.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpawn;
+                @Spawn.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpawn;
+                @Spawn.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSpawn;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -360,6 +385,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Drop.started += instance.OnDrop;
                 @Drop.performed += instance.OnDrop;
                 @Drop.canceled += instance.OnDrop;
+                @Spawn.started += instance.OnSpawn;
+                @Spawn.performed += instance.OnSpawn;
+                @Spawn.canceled += instance.OnSpawn;
             }
         }
     }
@@ -372,5 +400,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnEquip(InputAction.CallbackContext context);
         void OnAttributes(InputAction.CallbackContext context);
         void OnDrop(InputAction.CallbackContext context);
+        void OnSpawn(InputAction.CallbackContext context);
     }
 }

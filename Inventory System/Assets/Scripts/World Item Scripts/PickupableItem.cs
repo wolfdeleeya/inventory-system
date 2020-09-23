@@ -6,8 +6,9 @@ public class PickupableItem : Item
 {
     protected GameObject _uiPrefab;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _uiPrefab = GetComponent<UiHolder>().UIPrefab;
     }
 

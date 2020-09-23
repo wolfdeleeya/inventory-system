@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Health Potion
   m_EditorClassIdentifier: 
   Name: Health Potion
-  sprite: {fileID: 21300000, guid: 76c7b1e5e891d8e43a7aeb9c2d0a8eb3, type: 3}
+  sprite: {fileID: -4063344069394650424, guid: 8f0cec16aaa13b14196a995f60d067fa, type: 3}

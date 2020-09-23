@@ -14,18 +14,22 @@ public class PlayerController : MonoBehaviour, UIListener
     private Vector2 _movement = Vector2.zero;
     private Action _detectionMethod;
     private System.Action _clickMethod;
+    private Animator _animator;
+
     private Vector3 RandomVec
     {
         get {
-            Vector3 ranVec = new Vector3(UnityEngine.Random.value, UnityEngine.Random.value);
+            Vector3 ranVec = new Vector3(UnityEngine.Random.Range(-1f,1f), UnityEngine.Random.Range(-1f, 1f));
             return ranVec.normalized;
         }
     }
+
     private void Awake()
     {
         _camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         _controls = new PlayerControls();
         _body = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
         _clickMethod = Click;
     }
 
@@ -43,6 +47,8 @@ public class PlayerController : MonoBehaviour, UIListener
     private void OnMove(InputValue value)
     {
         _movement = value.Get<Vector2>().normalized;
+        _animator.SetFloat("Xaxis", _movement.x);
+        _animator.SetFloat("Yaxis", _movement.y);
     }
 
     private void Click()
@@ -113,7 +119,6 @@ public class PlayerController : MonoBehaviour, UIListener
         Collider2D col = Physics2D.OverlapCircle(transform.position,_pickupProximity,LayerMask.GetMask("Pickups"));
         if (col == null)
             return;
-        Debug.Log(col.gameObject.name);
 
         GameObject obj = col.gameObject;
         if (obj.tag == "Item" && Vector2.Distance(obj.transform.position, transform.position) < _pickupProximity)
