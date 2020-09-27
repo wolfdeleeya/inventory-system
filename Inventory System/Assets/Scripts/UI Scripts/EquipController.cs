@@ -6,6 +6,7 @@ public class EquipController : MonoBehaviour, EquipmentListener
 {
     [SerializeField] private List<ItemContainer> _cells;
     [SerializeField] private List<int> _startingStats;
+    [SerializeField] private PlayerController player;
 
     private void Awake()
     {

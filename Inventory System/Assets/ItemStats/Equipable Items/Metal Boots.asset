@@ -18,3 +18,4 @@ MonoBehaviour:
   - StatName: 1
     Amount: 2
   Type: 3
+  MaxDurability: 75

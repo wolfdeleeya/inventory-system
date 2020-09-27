@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Equipment
+public class Equipment : PlayerMovementListener
 {
     private List<int> _startingStats;
     private List<int> _totalStats;
-    private List<ItemInfo> _cells;
+    private List<EquipableItemInfo> _cells;
     private List<EquipmentListener> _listeners;
 
     public static Equipment Instance { get; private set; }
@@ -24,13 +24,13 @@ public class Equipment
     {
         _startingStats = new List<int>(startingStats);
         _totalStats = new List<int>(startingStats);
-        _cells = new List<ItemInfo>();
+        _cells = new List<EquipableItemInfo>();
         for (int i = 0; i < 4; ++i)
             _cells.Add(null);
         _listeners = new List<EquipmentListener>();
     }
 
-    public void EquipItem(ItemInfo itemToEquip)
+    public void EquipItem(EquipableItemInfo itemToEquip)
     {
         EquipmentStats.SlotType type = ((EquipmentStats)itemToEquip.Stats).Type;
 
@@ -58,6 +58,23 @@ public class Equipment
     public ItemInfo GetItemAt(EquipmentStats.SlotType type)
     {
         return _cells[(int)type];
+    }
+    
+    public void PlayerMoved(float distance)
+    {
+        for(int i=0;i<_cells.Count;++i)
+        {
+            if (_cells[i] != null)
+            {
+                _cells[i].Spend(distance);
+                if (_cells[i].CurrentDurability <= 0)
+                {
+                    ItemInfo item = _cells[i];
+                    RemoveItem((EquipmentStats.SlotType)i);
+                    item.Destroy();
+                }
+            }
+        }
     }
 
     public void AddListener(EquipmentListener listener) => _listeners.Add(listener);

@@ -2,6 +2,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour, UIListener
 {
@@ -17,10 +18,12 @@ public class PlayerController : MonoBehaviour, UIListener
     private PlayerControls _controls = null;
     private Vector2 _movement = Vector2.zero;
     private Action _detectionMethod;
+    private Action _pickupMethod;
     private System.Action _clickMethod;
     private Animator _animator;
     private Pickuper _pickuper;
     private PlayerInput _input;
+    private List<PlayerMovementListener> _listeners;
 
     private int _xAxisHash = Animator.StringToHash("Xaxis");
     private int _yAxisHash = Animator.StringToHash("Yaxis");
@@ -41,18 +44,32 @@ public class PlayerController : MonoBehaviour, UIListener
         _animator = GetComponent<Animator>();
         _pickuper = GetComponent<Pickuper>();
         _input = GetComponent<PlayerInput>();
+        _listeners = new List<PlayerMovementListener>();
         _clickMethod = Click;
+        _pickupMethod = OverlapCircle;
     }
 
     private void Start()
     {
         UIManager.Instance.AddListener(this);
+        AddListener(Equipment.Instance);
+    }
+
+    private void Update()
+    {
+        InformListeners(_body.velocity.magnitude * Time.deltaTime);
     }
 
     private void FixedUpdate()
     {
         _detectionMethod?.Invoke();
         _body.velocity = _movement * MovementSpeed;
+    }
+
+    private void InformListeners(float distance)
+    {
+        foreach (PlayerMovementListener listener in _listeners)
+            listener.PlayerMoved(distance);
     }
 
     private void OnMove(InputValue value)
@@ -125,6 +142,8 @@ public class PlayerController : MonoBehaviour, UIListener
             StartCoroutine(CameraManager.Instance.SwitchFocus(collider.transform, _switchFocusDuration));
     }
 
+    public void OnPickup() => _pickupMethod?.Invoke();
+
     public void DropItemOut()
     {
         ItemInfo item = ItemHolder.Instance.InAirItem;
@@ -152,16 +171,35 @@ public class PlayerController : MonoBehaviour, UIListener
         }
     }
 
-    public void Style1()
+    private void CircleCast()
     {
-        _detectionMethod = null;
-        _clickMethod = Click;
+        RaycastHit2D hit;
+        if(hit = Physics2D.CircleCast(_transform.position, _pickupProximity / 4, _movement, _pickupProximity / 2, _overlapLayer)){
+            PickUpItem(hit.transform.gameObject);
+        }
+        
     }
 
-    public void Style2()
+    public void SwitchContinuousPickupStyle()
     {
-        _detectionMethod = OverlapCircle;
-        _clickMethod = null;
+        if (_detectionMethod == null)
+        {
+            _detectionMethod = OverlapCircle;
+            _clickMethod = null;
+        }
+        else
+        {
+            _detectionMethod = null;
+            _clickMethod = Click;
+        }
+    }
+
+    public void SwitchInputPickupStyle()
+    {
+        if (_pickupMethod == OverlapCircle)
+            _pickupMethod = CircleCast;
+        else
+            _pickupMethod = OverlapCircle;
     }
 
     public void BlockInput() => _input.enabled = false;
@@ -172,16 +210,24 @@ public class PlayerController : MonoBehaviour, UIListener
 
     private void OnDisable() => _controls.Disable();
 
+    public void AddListener(PlayerMovementListener listener) => _listeners.Add(listener);
+
+    public void RemoveListener(PlayerMovementListener listener) => _listeners.Remove(listener);
+
     public void UIStateChanged()
     {
         if (UIManager.Instance.IsMenuOpened)
+        {
             _clickMethod = UIClick;
+            BlockInput();
+        }
         else
         {
             if (_detectionMethod == null)
                 _clickMethod = Click;
             else
                 _clickMethod = null;
+            AllowInput();
         }
     }
 }

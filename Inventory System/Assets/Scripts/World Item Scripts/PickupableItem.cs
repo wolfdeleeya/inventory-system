@@ -9,8 +9,13 @@ public class PickupableItem : Item
         base.Awake();
     }
 
-    public void Initialize(ItemInfo info)
+    public virtual void Initialize(ItemInfo info)
     {
         Stats = info.Stats;
+    }
+
+    public virtual void Initialize(ItemStats stats)
+    {
+        Stats = stats;
     }
 }

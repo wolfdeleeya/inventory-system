@@ -18,4 +18,14 @@ public class ItemInfo : MonoBehaviour
         GameObject obj = Instantiate(_worldPrefab, position, Quaternion.identity);
         obj.GetComponent<PickupableItem>().Initialize(this);
     }
+
+    public virtual string Description()
+    {
+        return Stats.Description();
+    }
+
+    internal void Destroy()
+    {
+        Destroy(gameObject);
+    }
 }

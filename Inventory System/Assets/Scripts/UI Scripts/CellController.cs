@@ -17,7 +17,7 @@ public abstract class CellController : MonoBehaviour, IPointerEnterHandler, IPoi
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (_itemContainer.Item != null)
-            ItemHolder.Instance.ShowDescription(_itemContainer.Item.Stats.Description());
+            ItemHolder.Instance.ShowDescription(_itemContainer.Item.Description());
     }
     
     public void OnPointerClick(PointerEventData eventData)

@@ -32,10 +32,15 @@ public class Pickuper : MonoBehaviour
     {
         ItemInfo info;
         if (item is EquipableItem eItem)
+        {
             info = Instantiate(_equipUIPrefab).GetComponent<ItemInfo>();
+            ((EquipableItemInfo)info).Initialize(item.Stats, ((EquipableItem)item).CurrentDurability);
+        }
         else
+        {
             info = Instantiate(_consumeUIPrefab).GetComponent<ItemInfo>();
-        info.Initialize(item.Stats);
+            info.Initialize(item.Stats);
+        }
         Inventory.Instance.AddItem(info);
     }
 
@@ -45,8 +50,8 @@ public class Pickuper : MonoBehaviour
             Pickup((PickupableItem)item);
         else
         {
-            ItemInfo info = Instantiate(_equipUIPrefab).GetComponent<ItemInfo>();
-            info.Initialize(item.EquipmentStats);
+            EquipableItemInfo info = Instantiate(_equipUIPrefab).GetComponent<EquipableItemInfo>();
+            info.Initialize(item.EquipmentStats,item.CurrentDurability);
             Equipment.Instance.EquipItem(info);
         }
     }

@@ -11,12 +11,15 @@ public class EquipmentStats : ItemStats
 
     public SlotType Type;
 
+    public float MaxDurability;
+
     public override string Description()
     {
         string total = "Type: " + Type.ToString() + "\nStats:\n";
 
         foreach (Stats stat in Stats)
             total += stat.StatName.ToString() + ": +" + stat.Amount+"\n";
+        total += "Maximum Durability: " + MaxDurability + "\n";
         return base.Description()+total;
     }
 }

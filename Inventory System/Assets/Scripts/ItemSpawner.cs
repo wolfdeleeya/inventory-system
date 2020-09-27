@@ -24,7 +24,12 @@ public class ItemSpawner : MonoBehaviour
         SpawnObjectsStats spawnObjectsStats = _objectsToSpawn[UnityEngine.Random.Range(0, _objectsToSpawn.Count)];
         ItemStats stats = spawnObjectsStats.CompatibleStats[UnityEngine.Random.Range(0, spawnObjectsStats.CompatibleStats.Count)];
         GameObject obj = Instantiate(spawnObjectsStats.ObjectToSpawn.gameObject, position, Quaternion.identity);
-        obj.GetComponent<Item>().Stats = stats;
+
+        Item item = obj.GetComponent<Item>();
+        if (item is PickupableItem pickup)
+            pickup.Initialize(stats);
+        else
+            item.Stats = stats;
     }
 }
 

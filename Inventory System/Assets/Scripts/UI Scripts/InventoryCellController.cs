@@ -42,7 +42,7 @@ public class InventoryCellController : CellController
         if(_itemContainer.Item.Stats is EquipmentStats stats)
         {
             ItemInfo item = Equipment.Instance.GetItemAt(stats.Type);
-            Equipment.Instance.EquipItem(_itemContainer.Item);
+            Equipment.Instance.EquipItem((EquipableItemInfo)_itemContainer.Item);
             Inventory.Instance.RemoveItem(Index);
             if(item!=null)
                 Inventory.Instance.AddItem(item);

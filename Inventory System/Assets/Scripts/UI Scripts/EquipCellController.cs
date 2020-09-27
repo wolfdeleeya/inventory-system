@@ -20,7 +20,7 @@ public class EquipCellController : CellController
         {
             ItemInfo item = ItemHolder.Instance.InAirItem;
             ItemHolder.Instance.DropItem();
-            Equipment.Instance.EquipItem(item);
+            Equipment.Instance.EquipItem((EquipableItemInfo)item);
         }
         else if (!_itemContainer.IsEmpty() && ItemHolder.Instance.IsEmpty)
         {
@@ -32,7 +32,7 @@ public class EquipCellController : CellController
             ItemInfo itemEquip = _itemContainer.Item;
             ItemInfo itemHolder = ItemHolder.Instance.InAirItem;
             ItemHolder.Instance.HoldItem(itemEquip);
-            Equipment.Instance.EquipItem(itemHolder);
+            Equipment.Instance.EquipItem((EquipableItemInfo)itemHolder);
         }
     }
 
