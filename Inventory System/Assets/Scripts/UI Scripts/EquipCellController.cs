@@ -6,6 +6,8 @@ public class EquipCellController : CellController
 {
     public EquipmentStats.SlotType Type;
 
+    public int Index { get; set; }
+
     public override void OnClick()
     {
         if(!ItemHolder.Instance.IsEmpty)
@@ -20,7 +22,7 @@ public class EquipCellController : CellController
         {
             ItemInfo item = ItemHolder.Instance.InAirItem;
             ItemHolder.Instance.DropItem();
-            Equipment.Instance.EquipItem((EquipableItemInfo)item);
+            Equipment.Instance.EquipItemAt((EquipableItemInfo)item,Index);
         }
         else if (!_itemContainer.IsEmpty() && ItemHolder.Instance.IsEmpty)
         {
@@ -32,18 +34,19 @@ public class EquipCellController : CellController
             ItemInfo itemEquip = _itemContainer.Item;
             ItemInfo itemHolder = ItemHolder.Instance.InAirItem;
             ItemHolder.Instance.HoldItem(itemEquip);
-            Equipment.Instance.EquipItem((EquipableItemInfo)itemHolder);
+            Equipment.Instance.EquipItemAt((EquipableItemInfo)itemHolder,Index);
         }
     }
 
     public override void OnRightClick()
     {
             Inventory.Instance.AddItem(_itemContainer.Item);
-            Equipment.Instance.RemoveItem(((EquipmentStats)_itemContainer.Item.Stats).Type);
+            Equipment.Instance.RemoveItem(Index);
     }
 
     public override void OnMiddleClick()
     {
         throw new System.NotImplementedException();
     }
+
 }

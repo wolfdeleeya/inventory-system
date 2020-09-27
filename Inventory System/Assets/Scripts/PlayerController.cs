@@ -206,6 +206,10 @@ public class PlayerController : MonoBehaviour, UIListener
 
     public void AllowInput() => _input.enabled = true;
 
+    public void BlockMovement() => _controls.Gameplay.Move.Disable();
+
+    public void AllowMovement() => _controls.Gameplay.Move.Enable();
+
     private void OnEnable() => _controls.Enable();
 
     private void OnDisable() => _controls.Disable();
@@ -219,7 +223,7 @@ public class PlayerController : MonoBehaviour, UIListener
         if (UIManager.Instance.IsMenuOpened)
         {
             _clickMethod = UIClick;
-            BlockInput();
+            BlockMovement();
         }
         else
         {
@@ -227,7 +231,7 @@ public class PlayerController : MonoBehaviour, UIListener
                 _clickMethod = Click;
             else
                 _clickMethod = null;
-            AllowInput();
+            AllowMovement();
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu( fileName = "Equipable Item", menuName = "Items/Equipable Item" )]
 public class EquipmentStats : ItemStats
 {
-    public enum SlotType { Head, Armor, Weapon, Boots };
+    public enum SlotType { Head, Armor, Weapon, Boots, Pants, Ring };
 
     public List<Stats> Stats;
 

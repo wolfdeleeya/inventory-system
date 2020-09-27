@@ -155,10 +155,8 @@ RectTransform:
   m_Children:
   - {fileID: 631655596}
   - {fileID: 471847638}
-  - {fileID: 1949782142}
-  - {fileID: 1593563360}
   m_Father: {fileID: 5024195719406717950}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -190,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426820cf6a260f341b7c647555988478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 3
+  Type: 4
 --- !u!114 &55578407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12284,12 +12282,12 @@ RectTransform:
   m_Children:
   - {fileID: 1059181911}
   - {fileID: 333621784}
-  m_Father: {fileID: 55578404}
-  m_RootOrder: 3
+  m_Father: {fileID: 5024195719406717950}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 365.99997, y: 172}
+  m_AnchoredPosition: {x: 183, y: -72.999954}
   m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1593563361
@@ -12317,7 +12315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426820cf6a260f341b7c647555988478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
+  Type: 5
 --- !u!114 &1593563363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13385,12 +13383,12 @@ RectTransform:
   m_Children:
   - {fileID: 312117769}
   - {fileID: 827664674}
-  m_Father: {fileID: 55578404}
-  m_RootOrder: 2
+  m_Father: {fileID: 5024195719406717950}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000030517578, y: 172.00002}
+  m_AnchoredPosition: {x: -183.0001, y: -72.99994}
   m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1949782143
@@ -13418,7 +13416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426820cf6a260f341b7c647555988478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 5
 --- !u!114 &1949782145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15443,6 +15441,8 @@ RectTransform:
   - {fileID: 1502004036}
   - {fileID: 5024195719541402762}
   - {fileID: 5024195720014626499}
+  - {fileID: 1949782142}
+  - {fileID: 1593563360}
   - {fileID: 55578404}
   m_Father: {fileID: 5024195718694354311}
   m_RootOrder: 1
@@ -15469,9 +15469,9 @@ MonoBehaviour:
   - {fileID: 1502004037}
   - {fileID: 5024195719541402766}
   - {fileID: 5024195720014626503}
-  - {fileID: 5024195720014626503}
-  - {fileID: 5024195720014626503}
-  - {fileID: 5024195720014626503}
+  - {fileID: 55578405}
+  - {fileID: 1949782143}
+  - {fileID: 1593563361}
   _startingStats: 0500000005000000050000006400000005000000
   player: {fileID: 0}
 --- !u!1 &5024195719541402761

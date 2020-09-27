@@ -10,19 +10,19 @@ public class EquipController : MonoBehaviour, EquipmentListener
 
     private void Awake()
     {
-        Equipment.CreateEquipment(_startingStats);
+        Equipment.CreateEquipment(_startingStats, _cells);
         Equipment.Instance.AddListener(this);
+        for (int i = 0; i < _cells.Count; ++i)
+            _cells[i].GetComponent<EquipCellController>().Index = i;
     }
 
-    public void ItemEquiped(ItemInfo item)
+    public void ItemEquiped(ItemInfo item, int index)
     {
-        EquipmentStats.SlotType type = ((EquipmentStats)item.Stats).Type;
-
-        _cells[(int)type].AddItem(item);
+        _cells[index].AddItem(item);
     }
 
-    public void ItemUnequiped(EquipmentStats.SlotType type)
+    public void ItemUnequiped(int index)
     {
-        _cells[(int)type].RemoveItem();
+        _cells[index].RemoveItem();
     }
 }

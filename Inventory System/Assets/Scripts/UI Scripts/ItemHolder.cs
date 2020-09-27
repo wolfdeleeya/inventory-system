@@ -67,7 +67,7 @@ public class ItemHolder : MonoBehaviour
             if (_itemContainer.GetComponent<CellController>() is InventoryCellController cell)
                 Inventory.Instance.RemoveItem(cell.Index);
             else
-                Equipment.Instance.RemoveItem(((EquipmentStats)InAirItem.Stats).Type);
+                Equipment.Instance.RemoveItem(_itemContainer.GetComponent<EquipCellController>().Index);
             _itemContainer = null;
         }
         InAirItem = null;

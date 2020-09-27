@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface EquipmentListener
 {
-    void ItemEquiped(ItemInfo item);
-    void ItemUnequiped(EquipmentStats.SlotType type);
+    void ItemEquiped(ItemInfo item, int index);
+    void ItemUnequiped(int index);
 }

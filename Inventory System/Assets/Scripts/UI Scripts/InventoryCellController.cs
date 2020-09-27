@@ -39,12 +39,13 @@ public class InventoryCellController : CellController
 
     public override void OnRightClick()
     {
-        if(_itemContainer.Item.Stats is EquipmentStats stats)
+        if (_itemContainer.Item.Stats is EquipmentStats stats)
         {
-            ItemInfo item = Equipment.Instance.GetItemAt(stats.Type);
-            Equipment.Instance.EquipItem((EquipableItemInfo)_itemContainer.Item);
+            int index = Equipment.Instance.GetEquipableIndex(stats.Type);
+            ItemInfo item = Equipment.Instance.GetItemAt(index);
+            Equipment.Instance.EquipItemAt((EquipableItemInfo)_itemContainer.Item,index);
             Inventory.Instance.RemoveItem(Index);
-            if(item!=null)
+            if (item != null)
                 Inventory.Instance.AddItem(item);
         }
     }

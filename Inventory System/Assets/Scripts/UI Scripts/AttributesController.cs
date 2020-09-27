@@ -14,12 +14,12 @@ public class AttributesController : MonoBehaviour, EquipmentListener
         SetTexts();
     }
 
-    public void ItemEquiped(ItemInfo item)
+    public void ItemEquiped(ItemInfo item, int index)
     {
         SetTexts();
     }
 
-    public void ItemUnequiped(EquipmentStats.SlotType type)
+    public void ItemUnequiped(int index)
     {
         SetTexts();
     }
