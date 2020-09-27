@@ -5,21 +5,25 @@ using UnityEngine;
 
 public class Equipment
 {
-    private int[] _startingStats;
+    private List<int> _startingStats;
+    private List<int> _totalStats;
     private List<ItemInfo> _cells;
     private List<EquipmentListener> _listeners;
 
     public static Equipment Instance { get; private set; }
 
-    public static void CreateEquipment(int[] startingStats)
+    public IReadOnlyList<int> TotalStats { get { return _totalStats.AsReadOnly(); } }
+
+    public static void CreateEquipment(List<int> startingStats)
     {
         if (Instance == null)
             Instance = new Equipment(startingStats);
     }
 
-    private Equipment(int[] startingStats)
+    private Equipment(List<int> startingStats)
     {
-        _startingStats = startingStats;
+        _startingStats = new List<int>(startingStats);
+        _totalStats = new List<int>(startingStats);
         _cells = new List<ItemInfo>();
         for (int i = 0; i < 4; ++i)
             _cells.Add(null);
@@ -34,13 +38,19 @@ public class Equipment
             RemoveItem(type);
 
         _cells[(int) type] = itemToEquip;
+        List<Stats> statsToChange = ((EquipmentStats)itemToEquip.Stats).Stats;
+        foreach (Stats stat in statsToChange)
+            _totalStats[(int)stat.StatName] += stat.Amount;
+
         InformListenersItemEquiped(itemToEquip);
     }
 
     public void RemoveItem(EquipmentStats.SlotType type)
     {
         ItemInfo item = _cells[(int)type];
-
+        List<Stats> statsToChange = ((EquipmentStats)item.Stats).Stats;
+        foreach (Stats stat in statsToChange)
+            _totalStats[(int)stat.StatName] -= stat.Amount;
         _cells[(int) type] = null;
         InformListenersItemUnequiped(type);
     }
@@ -48,22 +58,6 @@ public class Equipment
     public ItemInfo GetItemAt(EquipmentStats.SlotType type)
     {
         return _cells[(int)type];
-    }
-
-    public int[] CalculateTotalStats()
-    {
-        int[] bonus = new int[Enum.GetNames(typeof(Attribute)).Length];
-        foreach(ItemInfo item in _cells)
-        {
-            if (item == null)
-                continue;
-            EquipmentStats stats = item.Stats as EquipmentStats;
-            foreach (Stats stat in stats.Stats)
-                bonus[(int)stat.StatName] += stat.Amount;
-        }
-        for (int i = 0; i < bonus.Length; ++i)
-            bonus[i] += _startingStats[i];
-        return bonus;
     }
 
     public void AddListener(EquipmentListener listener) => _listeners.Add(listener);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PermanentItem : Item
+public interface StackableItemListener
 {
+    void StackChanged(int amount);
 }

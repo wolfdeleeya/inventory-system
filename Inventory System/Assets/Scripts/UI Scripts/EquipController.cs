@@ -5,7 +5,7 @@ using UnityEngine;
 public class EquipController : MonoBehaviour, EquipmentListener
 {
     [SerializeField] private List<ItemContainer> _cells;
-    [SerializeField] private int[] _startingStats;
+    [SerializeField] private List<int> _startingStats;
 
     private void Awake()
     {

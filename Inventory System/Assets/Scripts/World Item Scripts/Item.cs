@@ -19,8 +19,6 @@ public abstract class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         GetComponent<SpriteRenderer>().sprite = Stats.sprite;
     }
 
-    public abstract void Pickup();
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         _animator.SetTrigger("Glow");

@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 3906336119848540859}
   - component: {fileID: 2710743854489114293}
   - component: {fileID: -116812874360214671}
+  - component: {fileID: 3692819757483675019}
   m_Layer: 8
   m_Name: Stackable
   m_TagString: Item
@@ -412,4 +413,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Stats: {fileID: 0}
-  Amount: 1
+  _amount: 1
+--- !u!114 &3692819757483675019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8454138407672454230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1adf37c9e84f11845b9a321c3ac2f576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stackText: {fileID: 3882105088744274277}

@@ -26,9 +26,9 @@ public class AttributesController : MonoBehaviour, EquipmentListener
 
     private void SetTexts()
     {
-        int[] stats = Equipment.Instance.CalculateTotalStats();
+        IReadOnlyList<int> stats = Equipment.Instance.TotalStats;
         string[] statNames = Enum.GetNames(typeof(Attribute));
-        for(int i = 0; i < stats.Length; ++i)
+        for(int i = 0; i < stats.Count; ++i)
         {
             _statTexts[i].text = statNames[i] + " = " + stats[i];
         }

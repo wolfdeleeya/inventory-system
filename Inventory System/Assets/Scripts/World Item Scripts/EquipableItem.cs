@@ -9,16 +9,4 @@ public class EquipableItem : PickupableItem
     {
         get { return (EquipmentStats)Stats; }
     }
-
-    public override void Pickup()
-    {
-        if (Equipment.Instance.IsSlotOccupied(EquipmentStats.Type))
-            base.Pickup();
-        else
-        {
-            ItemInfo info = Instantiate(_uiPrefab).GetComponent<ItemInfo>();
-            info.Initialize(EquipmentStats);
-            Equipment.Instance.EquipItem(info);
-        }
-    }
 }

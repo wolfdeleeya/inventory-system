@@ -6,8 +6,8 @@ using System;
 
 public class StackableItemInfo : ConsumableItemInfo
 {
-    [SerializeField] private TextMeshProUGUI text;
     private int _amount;
+    private List<StackableItemListener> _listeners;
 
     public int Amount
     {
@@ -15,15 +15,20 @@ public class StackableItemInfo : ConsumableItemInfo
         set
         {
             _amount = value;
-            text.text = value.ToString();
+            foreach (StackableItemListener listener in _listeners)
+                listener.StackChanged(Amount);
         }
+    }
+
+    private void Awake()
+    {
+        _listeners = new List<StackableItemListener>();
     }
 
     public void Initialize(ItemStats stats, int amount)
     {
         Stats = stats;
         Amount = amount;
-        text.text = Amount.ToString();
     }
 
     public override void SpawnWorldItem(Vector3 position)
@@ -51,4 +56,8 @@ public class StackableItemInfo : ConsumableItemInfo
         if (Amount == 0)
             Done = true;
     }
+
+    public void AddListener(StackableItemListener listener) => _listeners.Add(listener);
+
+    public void RemoveListener(StackableItemListener listener) => _listeners.Remove(listener);
 }

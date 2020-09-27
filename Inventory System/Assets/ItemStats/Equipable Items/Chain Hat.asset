@@ -17,6 +17,6 @@ MonoBehaviour:
   Stats:
   - StatName: 1
     Amount: 1
-  - StatName: 3
-    Amount: 25
+  - StatName: 4
+    Amount: 1
   Type: 0

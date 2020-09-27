@@ -14,6 +14,7 @@ public class ItemHolder : MonoBehaviour
     private ItemContainer _itemContainer;
     private Camera _camera;
     private Image _image;
+    private Transform _transform;
     private RectTransform _rectTransform;
     private GameObject _descriptionPanel;
     [SerializeField] private TextMeshProUGUI _descriptionText;
@@ -27,7 +28,8 @@ public class ItemHolder : MonoBehaviour
         _camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         _image = GetComponent<Image>();
         _rectTransform = GetComponent<RectTransform>();
-        _descriptionPanel = transform.GetChild(0).gameObject;
+        _transform = transform;
+        _descriptionPanel = _transform.GetChild(0).gameObject;
         _descriptionPanel.SetActive(false);
     }
 
@@ -40,7 +42,7 @@ public class ItemHolder : MonoBehaviour
     {
         if (InAirItem != null)
             DropItem();
-        itemToHold.transform.parent = transform;
+        itemToHold.transform.parent = _transform;
         InAirItem = itemToHold;
         _image.sprite = itemToHold.Stats.sprite;
         _image.color = new Color(1, 1, 1, 1);
@@ -52,7 +54,7 @@ public class ItemHolder : MonoBehaviour
     {
         if (InAirItem != null)
             DropItem();
-        itemToHold.transform.parent = transform;
+        itemToHold.transform.parent = _transform;
         InAirItem = itemToHold;
         _image.sprite = itemToHold.Stats.sprite;
         _image.color = new Color(1, 1, 1, 1);

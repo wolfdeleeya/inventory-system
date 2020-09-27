@@ -7,24 +7,26 @@ public class InventoryController : MonoBehaviour, InventoryListener
     [SerializeField] private int _numOfColumns;
     [SerializeField] private int _startingSize;
     [SerializeField] private GameObject _cellPrefab;
-    
+
+    private Transform _transform;
     private List<ItemContainer> _buttons;
 
     private void Awake()
     {
+        _transform = transform;
         _buttons = new List<ItemContainer>();
         Inventory.CreateInventory(_startingSize, _numOfColumns);
         Inventory.Instance.AddListener(this);
 
         for (int i = 0; i < _startingSize; ++i)
-            _buttons.Add(Instantiate(_cellPrefab, transform).GetComponent<ItemContainer>());
+            _buttons.Add(Instantiate(_cellPrefab, _transform).GetComponent<ItemContainer>());
     }
 
     public virtual void AddItem(ItemInfo itemToAdd, int index)
     {
         if(index>=_buttons.Count)
         {
-            _buttons.Add(Instantiate(_cellPrefab, transform).GetComponent<ItemContainer>());
+            _buttons.Add(Instantiate(_cellPrefab, _transform).GetComponent<ItemContainer>());
             _buttons[index].AddItem(itemToAdd);
         }
         else
@@ -40,7 +42,7 @@ public class InventoryController : MonoBehaviour, InventoryListener
 
     public void AddEmptySlot()
     {
-        _buttons.Add(Instantiate(_cellPrefab, transform).GetComponent<ItemContainer>());
+        _buttons.Add(Instantiate(_cellPrefab, _transform).GetComponent<ItemContainer>());
     }
 
     public void RemoveEmptySlot(int index)

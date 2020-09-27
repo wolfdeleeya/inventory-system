@@ -8,13 +8,22 @@ public class PlayerController : MonoBehaviour, UIListener
     public float MovementSpeed;
     
     [SerializeField] private float _pickupProximity;
-    private Camera _camera;
+    [SerializeField] private float _switchFocusDuration;
+    [SerializeField] private LayerMask _overlapLayer;
+
+
+    private Transform _transform;
     private Rigidbody2D _body;
     private PlayerControls _controls = null;
     private Vector2 _movement = Vector2.zero;
     private Action _detectionMethod;
     private System.Action _clickMethod;
     private Animator _animator;
+    private Pickuper _pickuper;
+    private PlayerInput _input;
+
+    private int _xAxisHash = Animator.StringToHash("Xaxis");
+    private int _yAxisHash = Animator.StringToHash("Yaxis");
 
     private Vector3 RandomVec
     {
@@ -26,10 +35,12 @@ public class PlayerController : MonoBehaviour, UIListener
 
     private void Awake()
     {
-        _camera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        _transform = transform;
         _controls = new PlayerControls();
         _body = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+        _pickuper = GetComponent<Pickuper>();
+        _input = GetComponent<PlayerInput>();
         _clickMethod = Click;
     }
 
@@ -47,19 +58,19 @@ public class PlayerController : MonoBehaviour, UIListener
     private void OnMove(InputValue value)
     {
         _movement = value.Get<Vector2>().normalized;
-        _animator.SetFloat("Xaxis", _movement.x);
-        _animator.SetFloat("Yaxis", _movement.y);
+        _animator.SetFloat(_xAxisHash, _movement.x);
+        _animator.SetFloat(_yAxisHash, _movement.y);
     }
 
     private void Click()
     {
-        Vector2 clickPos = _camera.ScreenToWorldPoint((Vector3)Mouse.current.position.ReadValue());
+        Vector2 clickPos = CameraManager.Instance.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         Collider2D col = Physics2D.OverlapPoint(clickPos);
         if (col == null)
             return;
 
         GameObject obj = col.gameObject;
-        if (obj.tag == "Item" && Vector2.Distance(obj.transform.position,transform.position)<_pickupProximity)
+        if (obj.CompareTag("Item") && Vector2.Distance(obj.transform.position,_transform.position)<_pickupProximity)
         {
             PickUpItem(obj);
         }
@@ -101,33 +112,41 @@ public class PlayerController : MonoBehaviour, UIListener
 
     public void OnSpawn()
     {
-        Vector2 pos = _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 pos = CameraManager.Instance.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         ItemSpawner.Instance.SpawnRandomItem(new Vector3(pos.x,pos.y,-1));
+    }
+
+    public void OnView()
+    {
+        Vector3 position = CameraManager.Instance.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Collider2D collider = Physics2D.OverlapPoint(position);
+        Debug.Log(collider);
+        if (collider != null)
+            StartCoroutine(CameraManager.Instance.SwitchFocus(collider.transform, _switchFocusDuration));
     }
 
     public void DropItemOut()
     {
         ItemInfo item = ItemHolder.Instance.InAirItem;
-        item.SpawnWorldItem(transform.position + RandomVec * _pickupProximity * 1.5f);
+        item.SpawnWorldItem(_transform.position + RandomVec * _pickupProximity * 1.5f);
         ItemHolder.Instance.DropItem();
         Destroy(item.gameObject);
     }
 
     private void PickUpItem(GameObject obj)
     {
-        obj.GetComponent<Item>().Pickup();
+        _pickuper.Pickup(obj.GetComponent<Item>());
         Destroy(obj);
     }
 
     private void OverlapCircle()
     {
-        Debug.Log(LayerMask.GetMask("Pickups"));
-        Collider2D col = Physics2D.OverlapCircle(transform.position,_pickupProximity,LayerMask.GetMask("Pickups"));
+        Collider2D col = Physics2D.OverlapCircle(_transform.position,_pickupProximity,_overlapLayer);
         if (col == null)
             return;
 
         GameObject obj = col.gameObject;
-        if (obj.tag == "Item" && Vector2.Distance(obj.transform.position, transform.position) < _pickupProximity)
+        if (obj.CompareTag("Item") && Vector2.Distance(obj.transform.position, _transform.position) < _pickupProximity)
         {
             PickUpItem(obj);
         }
@@ -144,6 +163,10 @@ public class PlayerController : MonoBehaviour, UIListener
         _detectionMethod = OverlapCircle;
         _clickMethod = null;
     }
+
+    public void BlockInput() => _input.enabled = false;
+
+    public void AllowInput() => _input.enabled = true;
 
     private void OnEnable() => _controls.Enable();
 
