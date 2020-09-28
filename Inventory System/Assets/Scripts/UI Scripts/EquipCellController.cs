@@ -10,7 +10,10 @@ public class EquipCellController : CellController
 
     public override void OnClick()
     {
-        if(!ItemHolder.Instance.IsEmpty)
+        if (UIManager.Instance.IsSplitOpened)
+            return;
+
+        if (!ItemHolder.Instance.IsEmpty)
         {
             EquipmentStats stats =  ItemHolder.Instance.InAirItem.Stats as EquipmentStats;
             if (stats == null || stats.Type!=Type)
