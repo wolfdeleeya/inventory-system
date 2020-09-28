@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public bool EquipOpened { get; private set; }
     public bool AttributesOpened { get; private set; }
     public bool IsMenuOpened { get { return InventoryOpened || EquipOpened; } }
+    public bool IsSplitOpened { get; private set; }
 
     private List<UIListener> _listeners;
 
@@ -89,16 +90,26 @@ public class UIManager : MonoBehaviour
 
     public void OpenSlider()
     {
+        if (IsSplitOpened)
+            return;
+
         _animator.SetTrigger("Slider In");
+        IsSplitOpened = true;
     }
 
     public void CloseSlider()
     {
+        if (!IsSplitOpened)
+            return;
+
         _animator.SetTrigger("Slider Out");
+        IsSplitOpened = false;
     }
 
     public void ChangeInventoryState()
     {
+        if (IsSplitOpened)
+            return;
         if (InventoryOpened)
             CloseInventory();
         else

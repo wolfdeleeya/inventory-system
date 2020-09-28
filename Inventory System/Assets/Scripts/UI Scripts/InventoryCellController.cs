@@ -14,6 +14,9 @@ public class InventoryCellController : CellController
 
     public override void OnClick()
     {
+        if (UIManager.Instance.IsSplitOpened)
+            return;
+
         if (_itemContainer.IsEmpty() && ItemHolder.Instance.IsEmpty)
             return;
         else if (_itemContainer.IsEmpty() && !ItemHolder.Instance.IsEmpty)
@@ -39,6 +42,9 @@ public class InventoryCellController : CellController
 
     public override void OnRightClick()
     {
+        if (UIManager.Instance.IsSplitOpened)
+            return;
+
         if (_itemContainer.Item.Stats is EquipmentStats stats)
         {
             int index = Equipment.Instance.GetEquipableIndex(stats.Type);

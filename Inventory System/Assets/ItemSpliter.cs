@@ -11,6 +11,7 @@ public class ItemSpliter : MonoBehaviour
     public static ItemSpliter Instance { get; private set; }
 
     private int _amountToTake;
+    private StackableItemInfo _itemToSplit;
 
     private void Awake()
     {
@@ -31,17 +32,24 @@ public class ItemSpliter : MonoBehaviour
         }
     }
 
-    private StackableItemInfo _itemToSplit;
 
     public void SetAmountToTake(float value)
     {
-        AmountToTake = (int)((((StackableItemStats)_itemToSplit.Stats).MaxStack - 1) * -value);
+        if (_itemToSplit == null)
+            return;
+        AmountToTake = Mathf.RoundToInt(((_itemToSplit.Amount - 1) * value));
         _amountText.text = AmountToTake.ToString();
     }
 
     public void TakeItem(StackableItemInfo itemToTake)
     {
         _itemToSplit = itemToTake;
+    }
+
+    public void ClearSpliter()
+    {
+        _itemToSplit = null;
+        AmountToTake = 0;
     }
 
     public void TakeAway()
@@ -54,7 +62,7 @@ public class ItemSpliter : MonoBehaviour
         StackableItemInfo info = Instantiate(_stackUIPrefab).GetComponent<StackableItemInfo>();
         info.Initialize(_itemToSplit.Stats, AmountToTake);
         ItemHolder.Instance.HoldItem(info);
-        _itemToSplit = null;
-        AmountToTake = 0;
+
+        ClearSpliter();
     }
 }
