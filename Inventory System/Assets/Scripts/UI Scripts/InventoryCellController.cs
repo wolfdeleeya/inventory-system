@@ -47,6 +47,9 @@ public class InventoryCellController : CellController
             Inventory.Instance.RemoveItem(Index);
             if (item != null)
                 Inventory.Instance.AddItem(item);
+        } else if(_itemContainer.Item.Stats is StackableItemStats stackStats)
+        {
+            throw new System.NotImplementedException();
         }
     }
 
