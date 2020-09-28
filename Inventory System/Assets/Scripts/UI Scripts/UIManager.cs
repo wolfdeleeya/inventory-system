@@ -87,6 +87,16 @@ public class UIManager : MonoBehaviour
         AttributesOpened = false;
     }
 
+    public void OpenSlider()
+    {
+        _animator.SetTrigger("Slider In");
+    }
+
+    public void CloseSlider()
+    {
+        _animator.SetTrigger("Slider Out");
+    }
+
     public void ChangeInventoryState()
     {
         if (InventoryOpened)

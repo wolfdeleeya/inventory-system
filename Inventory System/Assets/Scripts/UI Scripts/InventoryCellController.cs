@@ -49,7 +49,12 @@ public class InventoryCellController : CellController
                 Inventory.Instance.AddItem(item);
         } else if(_itemContainer.Item.Stats is StackableItemStats stackStats)
         {
-            throw new System.NotImplementedException();
+            if (!_itemContainer.IsEmpty() && ItemHolder.Instance.IsEmpty)
+            {
+                UIManager.Instance.OpenSlider();
+                ItemInfo item = _itemContainer.Item;
+                ItemSpliter.Instance.TakeItem((StackableItemInfo)item);
+            }
         }
     }
 
