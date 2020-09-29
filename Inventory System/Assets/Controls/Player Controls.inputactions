@@ -278,6 +278,33 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Android",
+            "id": "d603d926-5be1-413a-b00d-3097429577c0",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "add2a3ef-fdd1-478b-833f-ab855fcba828",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6a06ce4b-12d2-42c3-b88b-66828f7d7358",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

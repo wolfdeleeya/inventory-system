@@ -20,7 +20,8 @@ public class CameraManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        _playerController = _playerTransform.gameObject.GetComponent<PlayerController>();
+        if(_playerTransform != null)
+            _playerController = _playerTransform.gameObject.GetComponent<PlayerController>();
         _camera = GetComponent<Camera>();
     }
 
@@ -31,6 +32,8 @@ public class CameraManager : MonoBehaviour
 
     public IEnumerator SwitchFocus(Transform newTarget, float duration)
     {
+        if (_playerTransform == null)
+            yield return null;
         _playerController.BlockInput();
         _virtualCamera.Follow = newTarget;
 

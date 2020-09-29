@@ -291,6 +291,33 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Android"",
+            ""id"": ""d603d926-5be1-413a-b00d-3097429577c0"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""add2a3ef-fdd1-478b-833f-ab855fcba828"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6a06ce4b-12d2-42c3-b88b-66828f7d7358"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -306,6 +333,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_Spawn = m_Gameplay.FindAction("Spawn", throwIfNotFound: true);
         m_Gameplay_View = m_Gameplay.FindAction("View", throwIfNotFound: true);
         m_Gameplay_Pickup = m_Gameplay.FindAction("Pickup", throwIfNotFound: true);
+        // Android
+        m_Android = asset.FindActionMap("Android", throwIfNotFound: true);
+        m_Android_Move = m_Android.FindAction("Move", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -448,6 +478,39 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // Android
+    private readonly InputActionMap m_Android;
+    private IAndroidActions m_AndroidActionsCallbackInterface;
+    private readonly InputAction m_Android_Move;
+    public struct AndroidActions
+    {
+        private @PlayerControls m_Wrapper;
+        public AndroidActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Android_Move;
+        public InputActionMap Get() { return m_Wrapper.m_Android; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AndroidActions set) { return set.Get(); }
+        public void SetCallbacks(IAndroidActions instance)
+        {
+            if (m_Wrapper.m_AndroidActionsCallbackInterface != null)
+            {
+                @Move.started -= m_Wrapper.m_AndroidActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_AndroidActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_AndroidActionsCallbackInterface.OnMove;
+            }
+            m_Wrapper.m_AndroidActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
+            }
+        }
+    }
+    public AndroidActions @Android => new AndroidActions(this);
     public interface IGameplayActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -459,5 +522,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnSpawn(InputAction.CallbackContext context);
         void OnView(InputAction.CallbackContext context);
         void OnPickup(InputAction.CallbackContext context);
+    }
+    public interface IAndroidActions
+    {
+        void OnMove(InputAction.CallbackContext context);
     }
 }
