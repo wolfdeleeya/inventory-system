@@ -5,13 +5,13 @@ using UnityEngine;
 public class EquipController : MonoBehaviour, EquipmentListener
 {
     [SerializeField] private List<ItemContainer> _cells;
-    [SerializeField] private List<int> _startingStats;
-    [SerializeField] private PlayerController player;
+    [SerializeField] private List<float> _startingStats;
 
     private void Awake()
     {
-        Equipment.CreateEquipment(_startingStats, _cells);
+        Equipment.CreateEquipment(_cells);
         Equipment.Instance.AddListener(this);
+        CharacterStats.CreateCharacterStats(_startingStats);
         for (int i = 0; i < _cells.Count; ++i)
             _cells[i].GetComponent<EquipCellController>().Index = i;
     }

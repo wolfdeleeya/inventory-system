@@ -19,25 +19,19 @@ public class Equipment : PlayerMovementListener
         public void SetItem(EquipableItemInfo item) => Item = item;
     }
 
-    private List<int> _startingStats;
-    private List<int> _totalStats;
     private List<EquipSlot> _cells;
     private List<EquipmentListener> _listeners;
 
     public static Equipment Instance { get; private set; }
 
-    public IReadOnlyList<int> TotalStats { get { return _totalStats.AsReadOnly(); } }
-
-    public static void CreateEquipment(List<int> startingStats, List<ItemContainer> containers)
+    public static void CreateEquipment(List<ItemContainer> containers)
     {
         if (Instance == null)
-            Instance = new Equipment(startingStats, containers);
+            Instance = new Equipment(containers);
     }
 
-    private Equipment(List<int> startingStats, List<ItemContainer> containers)
+    private Equipment(List<ItemContainer> containers)
     {
-        _startingStats = new List<int>(startingStats);
-        _totalStats = new List<int>(startingStats);
         _cells = new List<EquipSlot>();
         for (int i = 0; i < containers.Count; ++i)
         {
@@ -66,9 +60,8 @@ public class Equipment : PlayerMovementListener
         EquipSlot slot = _cells[index];
         slot.Item = itemToEquip;
         _cells[index] = slot;
-        List<Stats> statsToChange = ((EquipmentStats)itemToEquip.Stats).Stats;
-        foreach (Stats stat in statsToChange)
-            _totalStats[(int)stat.StatName] += stat.Amount;
+
+        CharacterStats.Instance.AddItemStats(itemToEquip);
 
         InformListenersItemEquiped(itemToEquip, index);
     }
@@ -76,9 +69,8 @@ public class Equipment : PlayerMovementListener
     public void RemoveItem(int index)
     {
         ItemInfo item = _cells[index].Item;
-        List<Stats> statsToChange = ((EquipmentStats)item.Stats).Stats;
-        foreach (Stats stat in statsToChange)
-            _totalStats[(int)stat.StatName] -= stat.Amount;
+
+        CharacterStats.Instance.RemoveItemStats((EquipableItemInfo)item);
 
         EquipSlot slot = _cells[index];
         slot.Item = null;

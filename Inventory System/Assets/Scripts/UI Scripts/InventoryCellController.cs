@@ -22,8 +22,8 @@ public class InventoryCellController : CellController
         else if (_itemContainer.IsEmpty() && !ItemHolder.Instance.IsEmpty)
         {
             ItemInfo item = ItemHolder.Instance.InAirItem;
-            ItemHolder.Instance.DropItem();
             Inventory.Instance.AddItemAtIndex(item, Index);
+            ItemHolder.Instance.DropItem();
 
         }
         else if(!_itemContainer.IsEmpty() && ItemHolder.Instance.IsEmpty)

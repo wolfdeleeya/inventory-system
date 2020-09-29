@@ -31,4 +31,4 @@ public struct Stats
     public int Amount;
 }
 
-public enum Attribute { Strength, Speed, Intelligence, Health, Luck }
+public enum Attribute { Strength, Speed, Intelligence, Armour, Luck, Health, Mana }

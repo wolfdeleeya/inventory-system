@@ -55,6 +55,7 @@ public class ItemHolder : MonoBehaviour
         if (InAirItem != null)
             DropItem();
         itemToHold.transform.parent = _transform;
+        itemToHold.transform.localPosition = new Vector3(0, 0, 0);
         InAirItem = itemToHold;
         _image.sprite = itemToHold.Stats.sprite;
         _image.color = new Color(1, 1, 1, 1);

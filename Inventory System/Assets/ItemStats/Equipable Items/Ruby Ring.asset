@@ -17,5 +17,7 @@ MonoBehaviour:
   Stats:
   - StatName: 0
     Amount: 1
+  - StatName: 6
+    Amount: 15
   Type: 5
   MaxDurability: 100
