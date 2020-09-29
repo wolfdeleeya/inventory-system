@@ -92,6 +92,21 @@ public class CharacterStats
         InformListeners();
     }
 
+    public void ReceiveBuff(Attribute attribute, float value)
+    {
+        _totalStats[(int)attribute] += value;
+        InformListeners();
+    }
+
+    public void ReceiveBuffSpendables(bool affectsHealth, float value)
+    {
+        if (affectsHealth)
+            CurrentHealth += value;
+        else
+            CurrentMana += value;
+        InformListeners();
+    }
+
     public void RemoveItemStats(EquipableItemInfo item)
     {
         List<Stats> statsToChange = ((EquipmentStats)item.Stats).Stats;

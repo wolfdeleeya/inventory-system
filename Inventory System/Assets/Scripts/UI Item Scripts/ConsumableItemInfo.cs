@@ -10,6 +10,7 @@ public class ConsumableItemInfo : ItemInfo
     {
         if(((NonequipableStats)Stats).Consumable)
             Debug.Log("Just consumed: " + Stats.Name);
+        BuffManager.Instance.SpawnBuff(((NonequipableStats)Stats).ItemBuffStats);
         Done = true;
     }
 }
