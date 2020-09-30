@@ -45,6 +45,8 @@ public class UIManager : MonoBehaviour
         InventoryOpened = false;
         if (!EquipOpened)
             ItemHolder.Instance.ReturnItem();
+        if (!IsMenuOpened)
+            ItemHolder.Instance.HideDescription();
         InformListeners();
     }
 
@@ -67,6 +69,8 @@ public class UIManager : MonoBehaviour
         EquipOpened = false;
         if (!InventoryOpened)
             ItemHolder.Instance.ReturnItem();
+        if (!IsMenuOpened)
+            ItemHolder.Instance.HideDescription();
         InformListeners();
     }
 

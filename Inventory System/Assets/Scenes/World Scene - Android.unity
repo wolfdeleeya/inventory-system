@@ -2357,6 +2357,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _virtualCamera: {fileID: 1348043834}
   _playerTransform: {fileID: 344815714273654154}
+  _minZoom: 2
+  _maxZoom: 10
+  _currentZoom: 5
 --- !u!1 &631655595
 GameObject:
   m_ObjectHideFlags: 0
@@ -12193,7 +12196,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 73.975, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1334298803
@@ -15102,10 +15105,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementSpeed: 5
   _pickupProximity: 2
-  _switchFocusDuration: 0
   _overlapLayer:
     serializedVersion: 2
     m_Bits: 256
+  _zoomSpeed: 1
 --- !u!61 &344815714273654152
 BoxCollider2D:
   m_ObjectHideFlags: 0

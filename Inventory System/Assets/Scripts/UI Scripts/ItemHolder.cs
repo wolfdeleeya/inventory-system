@@ -35,7 +35,8 @@ public class ItemHolder : MonoBehaviour
 
     private void LateUpdate()
     {
-        _rectTransform.position = Mouse.current.position.ReadValue();
+        if(Application.platform!=RuntimePlatform.Android)
+            _rectTransform.position = Mouse.current.position.ReadValue();
     }
     
     public void HoldItem(ItemInfo itemToHold, ItemContainer itemContainer)

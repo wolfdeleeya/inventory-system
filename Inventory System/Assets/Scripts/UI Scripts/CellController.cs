@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public abstract class CellController : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
     protected ItemContainer _itemContainer;
+    protected const float MIN_HOLD_TIMER=2f;
 
     protected virtual void Awake()
     {
@@ -14,31 +15,32 @@ public abstract class CellController : MonoBehaviour, IPointerEnterHandler, IPoi
 
     public abstract void OnClick();
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public virtual void OnPointerEnter(PointerEventData eventData)
     {
-        if (_itemContainer.Item != null)
+        if (!_itemContainer.IsEmpty())
             ItemHolder.Instance.ShowDescription(_itemContainer.Item.Description());
     }
     
-    public void OnPointerClick(PointerEventData eventData)
+    public virtual void OnPointerClick(PointerEventData eventData)
     {
-        if (_itemContainer.IsEmpty())
-            return;
-        switch (eventData.button)
-        {
-            case PointerEventData.InputButton.Right:
-                OnRightClick();
-                break;
-            case PointerEventData.InputButton.Middle:
-                OnMiddleClick();
-                break;
-        }
+            if (_itemContainer.IsEmpty())
+                return;
+            switch (eventData.button)
+            {
+                case PointerEventData.InputButton.Right:
+                    OnRightClick();
+                    break;
+                case PointerEventData.InputButton.Middle:
+                    OnMiddleClick();
+                    break;
+            }
+
     }
 
     public abstract void OnRightClick();
     public abstract void OnMiddleClick();
 
-    public void OnPointerExit(PointerEventData eventData)
+    public virtual void OnPointerExit(PointerEventData eventData)
     {
         ItemHolder.Instance.HideDescription();
     }

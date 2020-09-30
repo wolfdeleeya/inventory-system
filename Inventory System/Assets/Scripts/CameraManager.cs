@@ -10,8 +10,22 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _virtualCamera;
     [SerializeField] private Transform _playerTransform;
 
+    [SerializeField] private float _minZoom;
+    [SerializeField] private float _maxZoom;
+    [SerializeField] private float _currentZoom;
+
     private PlayerController _playerController;
     private Camera _camera;
+
+    public float CurrentZoom
+    {
+        get { return _currentZoom; }
+        set
+        {
+            _currentZoom = Mathf.Clamp(value, _minZoom, _maxZoom);
+            _virtualCamera.m_Lens.OrthographicSize = _currentZoom;
+        }
+    }
 
     private void Awake()
     {
@@ -23,6 +37,7 @@ public class CameraManager : MonoBehaviour
         if(_playerTransform != null)
             _playerController = _playerTransform.gameObject.GetComponent<PlayerController>();
         _camera = GetComponent<Camera>();
+        CurrentZoom = CurrentZoom;
     }
 
     public Vector3 ScreenToWorldPoint(Vector3 vec)
