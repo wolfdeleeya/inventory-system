@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 public abstract class CellController : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
     protected ItemContainer _itemContainer;
-    protected const float MIN_HOLD_TIMER=2f;
 
     protected virtual void Awake()
     {
@@ -44,4 +43,6 @@ public abstract class CellController : MonoBehaviour, IPointerEnterHandler, IPoi
     {
         ItemHolder.Instance.HideDescription();
     }
+
+    public bool IsEmpty() { return _itemContainer.IsEmpty(); }
 }

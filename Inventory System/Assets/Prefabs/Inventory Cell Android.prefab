@@ -59,7 +59,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 8042091912454251743}
   - component: {fileID: 8164994811832263826}
   - component: {fileID: 8891539260698856974}
+  - component: {fileID: 2371094950045608792}
   m_Layer: 5
   m_Name: Inventory Cell Android
   m_TagString: Cell
@@ -216,5 +217,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee8549212493b224c971daf862999aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2371094950045608792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8042091912454251737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3a320f43438442408a8e31064ae6d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

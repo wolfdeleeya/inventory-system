@@ -16,8 +16,8 @@ public class EquipCellController : CellController
         if (!ItemHolder.Instance.IsEmpty)
         {
             EquipmentStats stats =  ItemHolder.Instance.InAirItem.Stats as EquipmentStats;
-            if (stats == null || stats.Type!=Type)
-                return;
+            if (stats == null || stats.Type != Type)
+                ItemHolder.Instance.ReturnItem();
         }
         if (_itemContainer.IsEmpty() && ItemHolder.Instance.IsEmpty)
             return;

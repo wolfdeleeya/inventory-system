@@ -2374,6 +2374,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _virtualCamera: {fileID: 1348043834}
   _playerTransform: {fileID: 354316403}
+  _minZoom: 2
+  _maxZoom: 10
+  _currentZoom: 5
 --- !u!1001 &615298932
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14452,6 +14455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a88848ec490757341841627ffd0444c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Transform: {fileID: 0}
   _descriptionText: {fileID: 1334298803}
 --- !u!114 &1667917964
 MonoBehaviour:
@@ -16406,6 +16410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdc01f1a42fa2814c8125ffd42f73baf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Raycaster: {fileID: 0}
 --- !u!114 &5024195718919294757
 MonoBehaviour:
   m_ObjectHideFlags: 0

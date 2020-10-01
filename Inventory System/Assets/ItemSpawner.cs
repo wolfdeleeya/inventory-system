@@ -8,6 +8,8 @@ public class ItemSpawner : MonoBehaviour
 {
 
     [SerializeField]private List<SpawnObjectsStats> _objectsToSpawn;
+    [SerializeField] private Vector2 xRange;
+    [SerializeField] private Vector2 yRange;
 
     public static ItemSpawner Instance { get; private set; }
 
@@ -17,6 +19,12 @@ public class ItemSpawner : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+    }
+
+    public void SpawnRandomItemAtRandomPosition()
+    {
+        Vector3 randomPos = new Vector3(UnityEngine.Random.Range(xRange.x, xRange.y), UnityEngine.Random.Range(yRange.x, yRange.y), -1);
+        SpawnRandomItem(randomPos);
     }
 
     public void SpawnRandomItem(Vector3 position)

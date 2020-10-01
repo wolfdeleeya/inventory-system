@@ -25,6 +25,7 @@ public class StackableItem : PickupableItem
     {
         base.Awake();
         _listeners = new List<StackableItemListener>();
+        Amount = Amount;
     }
 
     public void Initialize(ItemInfo info, int amount)

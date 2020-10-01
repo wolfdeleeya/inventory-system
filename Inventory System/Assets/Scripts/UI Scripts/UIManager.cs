@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     private Animator _animator;
+
+    public GraphicRaycaster Raycaster;
 
     public static UIManager Instance { get; private set; }
     public bool InventoryOpened { get; private set; }
@@ -24,6 +27,7 @@ public class UIManager : MonoBehaviour
 
         _animator = GetComponent<Animator>();
         _listeners = new List<UIListener>();
+        Raycaster = GetComponent<GraphicRaycaster>();
     }
 
     public void OpenInventory()

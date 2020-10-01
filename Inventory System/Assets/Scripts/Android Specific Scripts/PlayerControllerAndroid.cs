@@ -12,8 +12,7 @@ public class PlayerControllerAndroid : MonoBehaviour, UIListener
 
     [SerializeField] private float _pickupProximity;
     [SerializeField] private LayerMask _overlapLayer;
-
-    [SerializeField] private GraphicRaycaster _graphicRaycaster;
+    
     private PointerEventData _pointerEventData;
     private List<RaycastResult> _results;
 
@@ -63,28 +62,33 @@ public class PlayerControllerAndroid : MonoBehaviour, UIListener
 
     private void Update()
     {
+
         UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.EnhancedTouch.Touch> touches = UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches;
         switch (touches.Count)
         {
             case 1:
                 _prevTouchPos[0] = touches[0].screenPosition;
-                if (touches[0].phase == UnityEngine.InputSystem.TouchPhase.Began)
-                    break;
-                _pointerEventData.position = touches[0].screenPosition;
-                _graphicRaycaster.Raycast(_pointerEventData, _results);
-                if (_results.Count >= 1)
+                switch (touches[0].phase)
                 {
-                    GameObject obj = _results[0].gameObject;
+                    case UnityEngine.InputSystem.TouchPhase.Moved:
+                        ItemHolder.Instance.Move(touches[0].screenPosition);
+                        break;
+                    case UnityEngine.InputSystem.TouchPhase.Ended:
+                        _pointerEventData.position = touches[0].screenPosition;
+                        UIManager.Instance.Raycaster.Raycast(_pointerEventData, _results);
 
-                    if (!obj.CompareTag("Cell"))
-                        ItemHolder.Instance.HideDescription();
-                    _results.Clear();
-                }
-                else
-                {
-                    ItemHolder.Instance.HideDescription();
+                        if (_results.Count >= 1)
+                        {
+                            GameObject obj = _results[0].gameObject;
+                            if (!obj.CompareTag("Cell"))
+                                ItemHolder.Instance.HideDescription();
+                            _results.Clear();
+                        } else
+                            ItemHolder.Instance.HideDescription();
+                        break;
                 }
                 break;
+
             case 2:
                 if (UIManager.Instance.IsMenuOpened)
                     break;

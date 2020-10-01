@@ -3,43 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventoryCellControllerAndroid : InventoryCellController, IPointerDownHandler
+public class InventoryCellControllerAndroid : InventoryCellController
 {
-    private float _timer = 0;
-    private bool _down = false;
+    private AndroidCellController _androidCellController;
 
-    private void Update()
+    protected override void Awake()
     {
-        if (_down)
-        {
-            _timer += Time.deltaTime;
-            if (_timer >= CellController.MIN_HOLD_TIMER)
-            {
-                base.OnClick();
-                _down = false;
-                _timer = 0;
-            }
-        }
+        base.Awake();
+        _androidCellController = GetComponent<AndroidCellController>();
+        _androidCellController.Click = base.OnClick;
     }
 
     public override void OnPointerEnter(PointerEventData eventData) { }
 
     public override void OnPointerClick(PointerEventData eventData)
     {
-        if (_itemContainer.IsEmpty())
-            ItemHolder.Instance.HideDescription();
-        else
-            ItemHolder.Instance.ShowDescription(_itemContainer.Item.Description());
-    }
-
-    public override void OnPointerExit(PointerEventData eventData)
-    {
-        _down = false;
-        _timer = 0;
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        _down = true;
+        _androidCellController.OnPointerClick(eventData);
     }
 }
