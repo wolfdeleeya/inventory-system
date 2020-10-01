@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
     {
         if (InventoryOpened)
             return;
-
+        AnalyticsManager.Instance.SendAnalyticsMessage("Inventory window opened.");
         _animator.SetTrigger("Inventory In");
         InventoryOpened = true;
         InformListeners();
@@ -58,7 +58,7 @@ public class UIManager : MonoBehaviour
     {
         if (EquipOpened)
             return;
-
+        AnalyticsManager.Instance.SendAnalyticsMessage("Equipment window opened.");
         _animator.SetTrigger("Equip In");
         EquipOpened = true;
         InformListeners();
@@ -82,7 +82,7 @@ public class UIManager : MonoBehaviour
     {
         if (AttributesOpened)
             return;
-
+        AnalyticsManager.Instance.SendAnalyticsMessage("Attributes window opened.");
         _animator.SetTrigger("Attributes In");
         AttributesOpened = true;
     }
@@ -100,7 +100,7 @@ public class UIManager : MonoBehaviour
     {
         if (IsSplitOpened)
             return;
-
+        AnalyticsManager.Instance.SendAnalyticsMessage("Slider window opened.");
         _animator.SetTrigger("Slider In");
         IsSplitOpened = true;
     }

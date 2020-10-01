@@ -63,6 +63,8 @@ public class Equipment : PlayerMovementListener
 
         CharacterStats.Instance.AddItemStats(itemToEquip);
 
+        AnalyticsManager.Instance.SendAnalyticsMessage("Equiped an item called " + itemToEquip.Stats.Name + " and it's slot is " + slot.ToString() + ".");
+
         InformListenersItemEquiped(itemToEquip, index);
     }
 

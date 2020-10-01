@@ -21,11 +21,11 @@ public class ItemSpliter : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private int AmountToTake
+    public int AmountToTake
     {
         get { return _amountToTake; }
 
-        set
+        private set
         {
             _amountToTake = value;
             _amountText.text = value.ToString();

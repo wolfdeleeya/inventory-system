@@ -25,6 +25,7 @@ public class Pickuper : MonoBehaviour
                 Pickup((StackableItem)item);
                 break;
         }
+        AnalyticsManager.Instance.SendAnalyticsMessage("Picked up an item called " + item.Stats.Name + " and it's type is " + item.GetType().ToString() + ".");
     }
 
 

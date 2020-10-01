@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour, UIListener
     [SerializeField] private float _switchFocusDuration;
     [SerializeField] private LayerMask _overlapLayer;
 
-
     private Transform _transform;
     private Rigidbody2D _body;
     private PlayerControls _controls = null;
@@ -27,6 +26,11 @@ public class PlayerController : MonoBehaviour, UIListener
 
     private int _xAxisHash = Animator.StringToHash("Xaxis");
     private int _yAxisHash = Animator.StringToHash("Yaxis");
+
+    private float _collisionTimer = 0f;
+
+    private float _movementDelta = 0f;
+    private int _movementReported = 0;
 
     private Vector3 RandomVec
     {
@@ -57,6 +61,14 @@ public class PlayerController : MonoBehaviour, UIListener
 
     private void Update()
     {
+        _collisionTimer += Time.deltaTime;
+        _movementDelta += _body.velocity.magnitude * Time.deltaTime;
+        if (_movementDelta >= 10 && _movementReported<5)
+        {
+            _movementDelta = 0;
+            _movementReported++;
+            AnalyticsManager.Instance.SendAnalyticsMessage("Player moved by 10 units " + _movementReported + "times in this build execution");
+        }
         InformListeners(_body.velocity.magnitude * Time.deltaTime);
     }
 
@@ -200,6 +212,15 @@ public class PlayerController : MonoBehaviour, UIListener
             _pickupMethod = CircleCast;
         else
             _pickupMethod = OverlapCircle;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (_collisionTimer >= 5)
+        {
+            AnalyticsManager.Instance.SendAnalyticsMessage("Player collided");
+            _collisionTimer = 0f;
+        }
     }
 
     public void BlockInput() => _input.enabled = false;
